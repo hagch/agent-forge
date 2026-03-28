@@ -1,67 +1,117 @@
-# AgentForge
+# agentforge
 
-Self-improving multi-agent development framework for Claude Code. Coordinates 7 specialized agents through 6 development phases with compound verification, session continuity, and continuous self-improvement.
+A self-improving multi-agent development framework for Claude Code.
 
-## What It Does
+## What it does
 
-AgentForge structures your development workflow into **7 agents** working across **6 phases**:
+agentforge orchestrates 7 specialized agents through a 6-phase pipeline:
 
-### Agents
-
-| Agent | Model | Role |
-|-------|-------|------|
-| Orchestrator | Opus | Session management, phase coordination, agent dispatch |
-| Researcher | Opus | Codebase analysis, architecture understanding, context gathering |
-| Challenger | Opus | Assumption testing, edge case discovery, design review |
-| Planner | Opus | Task breakdown, implementation plans, dependency analysis |
-| Dev-Backend | Sonnet | Backend implementation, TDD, API development |
-| Dev-Frontend | Sonnet | Frontend implementation, TDD, UI components |
-| Verifier | Sonnet | Test execution, compound verification, quality gates |
-
-### Phases
-
-1. **Research** - Understand the codebase, gather context, analyze requirements
-2. **Challenge** - Question assumptions, identify risks, explore alternatives
-3. **Plan** - Break down into tasks, define implementation order, set acceptance criteria
-4. **Implement** - TDD cycles (Red/Green/Refactor), backend and frontend in parallel
-5. **Verify** - Compound verification (unit, integration, E2E), quality gates
-6. **Document** - Feature docs, CURRENT-STATE.md update, session handoff
+1. **Brainstorm** — Online research + Socratic dialogue → Concept Doc
+2. **Challenge** — Security, Performance, DX, DAU stress test
+3. **Planning** — Autonomous task-DAG creation with dependencies
+4. **Development** — Parallel TDD via Agent Teams (backend + frontend)
+5. **Verification** — Code review, E2E tests, DAU-UI test, compound gate
+6. **Self-Improve** — Retro, documentation, agent/skill improvements, community scan
 
 ## Installation
 
 ```bash
-claude plugin add agentforge
+# From GitHub
+claude plugin add github:hagch/agentforge
+
+# Or local (for development/testing)
+claude plugin add /path/to/agentforge
 ```
 
 ## Setup
 
-Run the setup command after installation to analyze your repository and extract coding guidelines:
+After installing, run in your project:
 
-```bash
+```
 /setup
 ```
 
-This scans your project structure, detects conventions, and configures AgentForge for your codebase.
+This analyzes your repository, extracts coding conventions, generates agents and skills configured for your project, and sets up Docsify documentation.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `/setup` | Analyze repo structure, extract coding guidelines, configure agents |
-| `/self-improve` | Compare with Superpowers diff, research online improvements, scan community patterns |
+| Command | Purpose |
+|---------|---------|
+| `/setup` | Initialize framework in a project (or update existing) |
+| `/self-improve` | Manual improvement: Superpowers diff, online research, community scan, health check |
+
+## Agents
+
+| Agent | Model | Role |
+|-------|-------|------|
+| orchestrator | opus | Pipeline control, state management, retro |
+| researcher | sonnet | Online research, community scan |
+| challenger | sonnet | 4-perspective stress test (Security, Performance, DX, DAU) |
+| planner | opus | Autonomous task-DAG creation |
+| dev-backend | sonnet | Backend TDD implementation |
+| dev-frontend | sonnet | Frontend TDD implementation |
+| verifier | opus | Code review, E2E, DAU-UI test, compound gate |
 
 ## Key Features
 
-- **Session Continuity** - CURRENT-STATE.md tracks progress across sessions so work is never lost
-- **Ralph Pattern** - Challenger agent questions plans before implementation to catch issues early
-- **Self-Improvement** - `/self-improve` evolves the framework by researching new patterns and community practices
-- **Plugin + Local Hybrid** - Works as a Claude Code plugin with local project overrides
-- **Docsify Integration** - Auto-generates searchable documentation site for your project
-- **Compound Verification** - Multi-layer testing (unit + integration + E2E) before any phase completes
+- **Session Continuity** — CURRENT-STATE.md tracks exact progress, resume after restart
+- **Ralph Pattern** — Fresh context per task, state in filesystem not LLM context
+- **Self-Improvement** — Every feature cycle improves agents, skills, and documentation
+- **Plugin + Local Hybrid** — Plugin installs templates, local copies evolve via self-improvement
+- **Docsify Integration** — All docs browsable as a website with search
+- **Compound Verification** — Multi-pass review + E2E + DAU-UI test before shipping
 
 ## Prerequisites
 
-- **Claude Code** with Agent Teams support
-- **Environment variable:** `CLAUDE_AGENT_TEAMS=1` must be set
-- **Permission mode:** Set to allow agent spawning (e.g., `--dangerously-skip-permissions` for local dev or configure appropriately)
-- **Chrome/Chromium** - Required for `/self-improve` online research capability
+Enable Agent Teams (experimental):
+
+```json
+// ~/.claude/settings.json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+```
+
+Start with:
+
+```bash
+claude --permission-mode auto --chrome
+```
+
+| Prerequisite | Why |
+|-------------|-----|
+| Agent Teams env var | Parallel dev-backend + dev-frontend with shared task list |
+| `--permission-mode auto` | Agents don't block on permission prompts |
+| `--chrome` (optional) | DAU-UI visual testing in verification phase |
+
+## Inspired By & Research
+
+agentforge draws from these ideas, frameworks, and patterns:
+
+### Compound AI Systems
+- **Berkeley BAIR** — [The Shift from Models to Compound AI Systems](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/) — Multiple interacting components outperform single monolithic models
+- **DSPy (Stanford)** — [dspy.ai](https://dspy.ai/) — Programming, not prompting, language models; treating multi-agent pipelines as optimizable programs
+
+### Superpowers Framework
+- **Jesse Vincent (obra)** — [Superpowers for Claude Code](https://github.com/obra/superpowers) — The foundational skills library for Claude Code: TDD enforcement, systematic debugging, verification-before-completion, plan-driven development. agentforge adapts and extends several Superpowers skills (tdd-cycle, systematic-debugging, plan-creation, verification-review, finishing-branch, writing-skills).
+- [Blog: Superpowers](https://blog.fsck.com/2025/10/09/superpowers/)
+
+### Multi-Agent Orchestration
+- **Addy Osmani** — [The Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) — "The bottleneck is no longer generation. It's verification." 3-4 builders per 1 reviewer, file ownership discipline, token budgeting
+- **Google ADK** — [Multi-Agent Patterns](https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/) — Sequential, parallel, loop, and DAG orchestration patterns
+- **Claude Code Agent Teams** — [Official Docs](https://code.claude.com/docs/en/agent-teams) — Shared task lists, peer-to-peer messaging, file locking
+
+### Ralph Loop Pattern
+- **Geoffrey Huntley / snarktank** — [ralph on GitHub](https://github.com/snarktank/ralph) — External shell loop: state in filesystem, fresh context per iteration, confusion accumulation prevention
+- [From ReAct to Ralph Loop](https://www.alibabacloud.com/blog/from-react-to-ralph-loop-a-continuous-iteration-paradigm-for-ai-agents_602799) — Continuous iteration paradigm for AI agents
+
+### Self-Improving Agents
+- **Yohei Nakajima** — [Better Ways to Build Self-Improving AI Agents](https://yoheinakajima.com/better-ways-to-build-self-improving-ai-agents/) — Reflection loops, persistent skill representations, self-generated in-context examples
+- **Shinn et al.** — [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — Verbal self-reflection without weight updates, Actor-Evaluator-Reflection architecture
+
+### Additional Influences
+- **CrewAI** — Role-based agent teams with structured task handoff
+- **LangGraph** — Graph-based workflow orchestration with state checkpointing
+- **Docsify** — [docsify.js.org](https://docsify.js.org/) — Zero-build documentation rendering from plain markdown
