@@ -15,12 +15,24 @@ agentforge orchestrates 7 specialized agents through a 6-phase pipeline:
 
 ## Installation
 
-```bash
-# From GitHub
-claude plugin add github:hagch/agentforge
+Two steps: add the marketplace, then install the plugin.
 
-# Or local (for development/testing)
-claude plugin add /path/to/agentforge
+```bash
+# Step 1: Add the agentforge marketplace
+claude plugin marketplace add hagch/agentforge
+
+# Step 2: Install the plugin
+claude plugin install agentforge
+```
+
+For local development/testing:
+
+```bash
+# Validate the plugin structure
+claude plugin validate /path/to/agentforge
+
+# Or run Claude with the plugin loaded directly
+claude --plugin-dir /path/to/agentforge
 ```
 
 ## Setup
