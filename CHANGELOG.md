@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 — Feature Doc Overview Section
+
+### Added
+- **Feature template: Overview section** with Description, Core Functions, and Usage Scenarios. Gives feature docs a human-readable explanation beyond just technical implementation details.
+- **Setup Step 6.9 enhanced:** When generating feature docs for existing features, setup now also populates the Overview section (description, core functions, usage scenarios) from code analysis.
+
 ## 0.4.0 — Sidebar Auto-Generation & Docsify Link Fix
 
 ### Added

@@ -2,6 +2,21 @@
 
 ## Status: CONCEPT
 
+## Overview
+
+### Description
+<!-- 2-3 sentences: What does this feature do? Why does it exist? Who benefits from it? -->
+
+### Core Functions
+<!-- Bulleted list of the key capabilities this feature provides -->
+-
+
+### Usage Scenarios
+<!-- Concrete scenarios showing how users interact with this feature.
+     Format: **Scenario title** — Step-by-step what happens from the user's perspective. -->
+
+1. **<Scenario>** — <Description>
+
 ## Concept
 <!-- Phase 1: Brainstorm output -->
 

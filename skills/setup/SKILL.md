@@ -189,11 +189,15 @@ This ensures the sidebar stays in sync whenever docs are created or modified —
 For each feature detected in Step 3:
 1. Create a feature doc from `feature-template.md` in `docs/agentforge/features/<domain>/<slug>/README.md`
 2. Set status to `EXISTING`
-3. Fill in known information from code analysis:
+3. Fill in the **Overview** section:
+   - **Description** — 2-3 sentences explaining what the feature does, why it exists, and who benefits
+   - **Core Functions** — Bulleted list of key capabilities (derived from routes, endpoints, and code analysis)
+   - **Usage Scenarios** — 1-3 concrete scenarios showing how users interact with this feature step-by-step
+4. Fill in known information from code analysis:
    - **Routes** from detected frontend pages
    - **API Endpoints** from detected controllers/OpenAPI specs
    - **Key Files** (entities, services, components) in Implementation Notes
-4. Leave concept/plan/challenge sections empty (feature predates agentforge)
+5. Leave concept/plan/challenge sections empty (feature predates agentforge)
 5. Update the feature link in `docs/agentforge/FEATURES.md` to point to the doc
 
 > **IMPORTANT — Docsify Link Paths:** Docsify resolves ALL markdown links relative to the `docs/` root, NOT relative to the current file. Links in `docs/agentforge/FEATURES.md` to feature docs MUST use full paths from docs root:
