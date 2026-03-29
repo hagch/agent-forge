@@ -31,10 +31,15 @@ For each skill template in `templates/skills/`:
 - Same logic as agents: fresh → copy, update → diff and decide.
 
 ### Docs
-- Create `docs/memory/` directory structure
+- Create `docs/agentforge/` directory structure
+- Create `docs/agentforge/features/<domain>/` directories for each detected domain
 - Copy templates for SITEMAP.md, FEATURES.md, DECISIONS.md (only if they don't exist)
-- Copy `docs/index.html` for Docsify (only if it doesn't exist)
-- Copy feature-template.md
+- Copy feature-template.md to `docs/agentforge/`
+- Copy course-style templates (overview.md, workflows.md) to `docs/agentforge/` (only if they don't exist)
+- **IMPORTANT — Docsify requires these files to avoid 404:**
+  - Copy `docs/index.html` (only if it doesn't exist) — includes Mermaid, flexible-alerts, tabs, pagination, sidebar-collapse, copy-code plugins
+  - **ALWAYS create `docs/README.md`** — Docsify uses this as the landing page. Without it, the root URL returns 404. Generate it from the project name and detected structure. Link to `agentforge/README.md` as the main knowledge base entry.
+  - **ALWAYS create `docs/_sidebar.md`** — must include ALL existing docs, not just the `docs/agentforge/` files. Scan the entire `docs/` directory recursively and generate sidebar entries for every `.md` file found.
 
 ## Step 3: Analyze Repository
 
@@ -49,13 +54,13 @@ For each skill template in `templates/skills/`:
 - From directory structure: `src/modules/`, `src/features/`, `apps/`
 - From API specs: separate spec files often = separate domains
 - From Spring Modulith / package structure
-- Create domain directories in `docs/memory/features/<domain>/`
+- Create domain directories in `docs/agentforge/features/<domain>/`
 
 ### Detect Existing Features
 - Scan routes/pages for frontend features
 - Scan API endpoints for backend features
-- Populate `docs/memory/FEATURES.md` with discovered features (status: EXISTING)
-- Generate `docs/memory/SITEMAP.md` from discovered routes
+- Populate `docs/agentforge/FEATURES.md` with discovered features (status: EXISTING)
+- Generate `docs/agentforge/SITEMAP.md` from discovered routes
 
 ## Step 4: Extract Coding Guidelines & Patterns
 
@@ -112,11 +117,61 @@ Set project-specific values:
 
 ## Step 6: Setup Docsify
 
-1. Generate `docs/_sidebar.md` from current `docs/` structure
-2. Add script to project:
-   - If `package.json` exists: add `"docs:serve": "npx docsify-cli serve docs"`
-   - If Nx workspace: suggest Nx target
-3. Test: run `npx docsify-cli serve docs` briefly to verify it works
+### 6.1: Generate `docs/README.md` (landing page)
+- **CRITICAL:** Docsify returns 404 without a `docs/README.md`. Always create one.
+- Content: Project name, short description, link to `agentforge/README.md` as the knowledge base entry point.
+
+### 6.2: Generate `docs/agentforge/README.md` (top-down entry point)
+- Content: "What does this project do?" — user-visible behavior, key user flows, reading guide.
+- Fill in from detected features, routes, and project description.
+- This is **Phase 1** of the top-down documentation arc.
+
+### 6.3: Generate `docs/agentforge/overview.md` (architecture)
+- Content: System diagram (Mermaid), component descriptions, tech stack, key patterns.
+- Fill in from detected structure (Step 3) and coding patterns (Step 4).
+- Use Mermaid `graph TB` for architecture diagrams.
+- This is **Phase 2** of the top-down arc.
+
+### 6.4: Generate `docs/agentforge/workflows.md` (data flows)
+- Content: End-to-end sequence diagrams (Mermaid), data flow patterns, integration points.
+- Fill in from detected API endpoints, routes, and service interactions.
+- Use Mermaid `sequenceDiagram` for request flows.
+- Use `<!-- tabs:start -->` / `<!-- tabs:end -->` for read/write/error flow tabs.
+- This is **Phase 3** of the top-down arc.
+
+### 6.5: Generate `docs/_sidebar.md` (complete navigation)
+- **CRITICAL:** Scan the ENTIRE `docs/` directory recursively — not just `docs/agentforge/`.
+- Include ALL existing `.md` files grouped by directory.
+- Use relative paths from `docs/` root (e.g., `agentforge/overview.md`, `superpowers/specs/xyz.md`).
+- Group entries logically by directory with section headers.
+- The agentforge section should follow the top-down reading order:
+  ```markdown
+  - **agentforge**
+    - [What Does This Project Do?](agentforge/README.md)
+    - [Architecture Overview](agentforge/overview.md)
+    - [Workflows](agentforge/workflows.md)
+    - [Feature Registry](agentforge/FEATURES.md)
+    - [Decisions](agentforge/DECISIONS.md)
+    - [Sitemap](agentforge/SITEMAP.md)
+  ```
+
+### 6.6: Copy `docs/index.html` from template (if it doesn't exist)
+
+### 6.7: Suggest serve command
+- If `package.json` exists: add `"docs:serve": "npx docsify-cli serve docs"`
+- If Nx workspace: suggest Nx target
+
+## Step 6.8: Generate Feature Docs for Existing Features
+
+For each feature detected in Step 3:
+1. Create a feature doc from `feature-template.md` in `docs/agentforge/features/<domain>/<slug>/README.md`
+2. Set status to `EXISTING`
+3. Fill in known information from code analysis:
+   - **Routes** from detected frontend pages
+   - **API Endpoints** from detected controllers/OpenAPI specs
+   - **Key Files** (entities, services, components) in Implementation Notes
+4. Leave concept/plan/challenge sections empty (feature predates agentforge)
+5. Update the feature link in `docs/agentforge/FEATURES.md` to point to the doc
 
 ## Step 7: Report
 
@@ -127,7 +182,7 @@ Present summary:
 ### Installed
 - 7 agent definitions in .claude/agents/
 - 10 skills in .claude/skills/
-- Documentation templates in docs/memory/
+- Documentation templates in docs/agentforge/
 
 ### Detected
 - Structure: <monorepo/single>
@@ -140,6 +195,13 @@ Present summary:
 - File ownership: dev-backend → <paths>, dev-frontend → <paths>
 - CLAUDE.md: <generated/updated/unchanged>
 - Docsify: <ready at docs:serve>
+
+### Documentation (top-down arc)
+- docs/agentforge/README.md — What does this project do?
+- docs/agentforge/overview.md — Architecture overview with diagrams
+- docs/agentforge/workflows.md — End-to-end data flows
+- docs/agentforge/FEATURES.md — Feature registry (<count> features)
+- docs/agentforge/DECISIONS.md — Architecture decisions
 
 ### Next Steps
 1. Review .claude/agents/ — adjust if needed

@@ -48,4 +48,4 @@ Follow the user's choice. For merge and PR: verify tests pass after the operatio
 ### 5. Clean Up
 - Delete feature branch (unless kept)
 - Update CURRENT-STATE.md to done
-- Update docs/memory/FEATURES.md
+- Update docs/agentforge/FEATURES.md

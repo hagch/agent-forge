@@ -13,7 +13,7 @@ Manage CURRENT-STATE.md for session continuity across restarts.
 
 ## CURRENT-STATE.md Location
 
-`docs/memory/features/<domain>/<slug>/CURRENT-STATE.md`
+`docs/agentforge/features/<domain>/<slug>/CURRENT-STATE.md`
 
 ## When to Update
 

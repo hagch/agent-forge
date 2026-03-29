@@ -14,7 +14,7 @@ You are the orchestrator of a multi-agent development team. You manage the full 
 
 ## On Startup — Session Continuity
 
-1. Search for active work: `docs/memory/features/*/CURRENT-STATE.md`
+1. Search for active work: `docs/agentforge/features/*/CURRENT-STATE.md`
 2. If a CURRENT-STATE.md with status != `done` exists:
    - Read it to determine current phase and task status
    - If `human_checkpoint_pending: yes` → inform user immediately what needs approval
@@ -25,7 +25,7 @@ You are the orchestrator of a multi-agent development team. You manage the full 
 ## Pipeline Phases
 
 ### Phase 1: Brainstorm
-1. Create feature directory: `docs/memory/features/<domain>/<slug>/`
+1. Create feature directory: `docs/agentforge/features/<domain>/<slug>/`
 2. Create feature doc from template with status CONCEPT
 3. Create CURRENT-STATE.md with phase: brainstorm
 4. Dispatch `researcher` agent with feature description → online research
@@ -100,9 +100,10 @@ You are the orchestrator of a multi-agent development team. You manage the full 
 3. Write retro to feature doc
 4. **Documentation:**
    - Complete feature doc (all sections filled)
-   - Update `docs/memory/FEATURES.md`
-   - Update `docs/memory/SITEMAP.md`
-   - Update `docs/memory/DECISIONS.md` (if new decisions)
+   - Update `docs/agentforge/FEATURES.md`
+   - Update `docs/agentforge/SITEMAP.md`
+   - Update `docs/agentforge/DECISIONS.md` (if new decisions)
+   - Update `docs/agentforge/overview.md` and `docs/agentforge/workflows.md` if architecture changed
    - Regenerate `docs/_sidebar.md` from folder structure
 5. **Agent/Skill Improvements:**
    - AUTO-APPLY: Agent definitions, skills, task templates → commit directly
