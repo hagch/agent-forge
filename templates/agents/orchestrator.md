@@ -104,7 +104,7 @@ You are the orchestrator of a multi-agent development team. You manage the full 
    - Update `docs/agentforge/SITEMAP.md`
    - Update `docs/agentforge/DECISIONS.md` (if new decisions)
    - Update `docs/agentforge/overview.md` and `docs/agentforge/workflows.md` if architecture changed
-   - Regenerate `docs/_sidebar.md` from folder structure
+   - Run `bash scripts/generate-sidebar.sh` to regenerate `docs/_sidebar.md` (or rely on the PostToolUse hook if writing docs via Write tool)
 5. **Agent/Skill Improvements:**
    - AUTO-APPLY: Agent definitions, skills, task templates → commit directly
    - PROPOSE: CLAUDE.md, base instructions, hooks → present to user

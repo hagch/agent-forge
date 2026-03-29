@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.0 — Sidebar Auto-Generation & Docsify Link Fix
+
+### Added
+- **`scripts/generate-sidebar.sh`:** Setup now creates a shell script that regenerates `docs/_sidebar.md` from the directory structure. Scans feature docs, domain specs, and all other doc directories. Extracts H1 titles for sidebar labels.
+- **PostToolUse Hook:** Setup configures a `Write(docs/**)` hook in `.claude/settings.json` that runs the sidebar generator automatically after every doc change. New feature docs appear in navigation without manual intervention.
+
+### Fixed
+- **Docsify link resolution:** All links in `docs/agentforge/` files now use full paths from docs root (`agentforge/features/...`) instead of relative paths (`features/...`). Docsify resolves all links relative to `docs/` root, not the current file — relative paths from subdirectories caused 404s.
+- **FEATURES.md template:** Added comment documenting the path rule so orchestrator and agents generate correct links.
+- **Orchestrator Phase 6:** Now runs `scripts/generate-sidebar.sh` instead of manually regenerating sidebar.
+
 ## 0.3.0 — docs/agentforge/ Namespace & Enhanced Docsify
 
 ### Changed

@@ -139,29 +139,52 @@ Set project-specific values:
 - Use `<!-- tabs:start -->` / `<!-- tabs:end -->` for read/write/error flow tabs.
 - This is **Phase 3** of the top-down arc.
 
-### 6.5: Generate `docs/_sidebar.md` (complete navigation)
-- **CRITICAL:** Scan the ENTIRE `docs/` directory recursively — not just `docs/agentforge/`.
-- Include ALL existing `.md` files grouped by directory.
-- Use relative paths from `docs/` root (e.g., `agentforge/overview.md`, `superpowers/specs/xyz.md`).
-- Group entries logically by directory with section headers.
-- The agentforge section should follow the top-down reading order:
-  ```markdown
-  - **agentforge**
-    - [What Does This Project Do?](agentforge/README.md)
-    - [Architecture Overview](agentforge/overview.md)
-    - [Workflows](agentforge/workflows.md)
-    - [Feature Registry](agentforge/FEATURES.md)
-    - [Decisions](agentforge/DECISIONS.md)
-    - [Sitemap](agentforge/SITEMAP.md)
-  ```
+### 6.5: Create `scripts/generate-sidebar.sh`
 
-### 6.6: Copy `docs/index.html` from template (if it doesn't exist)
+Create a shell script that regenerates `docs/_sidebar.md` from the directory structure. This script is the single source of truth for sidebar generation — never hand-edit the sidebar.
 
-### 6.7: Suggest serve command
+The script must:
+1. Write the static agentforge section (README, overview, workflows, FEATURES, DECISIONS, SITEMAP)
+2. Scan `docs/agentforge/features/` recursively for `README.md` files
+3. Extract the H1 title from each feature doc (`grep -m1 '^# '`)
+4. Strip the "Feature: " prefix from titles
+5. Generate sidebar entries with full paths from docs root (e.g., `agentforge/features/tenant/tenant-mgmt/README.md`)
+6. Scan remaining doc directories (domain specs, branding, plans, specs, etc.)
+7. Extract H1 titles from each doc for the sidebar label
+
+Make the script executable: `chmod +x scripts/generate-sidebar.sh`
+
+### 6.6: Configure PostToolUse Hook
+
+Add a hook to `.claude/settings.json` that runs the sidebar generator after every `Write` to `docs/`:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(docs/**)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/generate-sidebar.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+This ensures the sidebar stays in sync whenever docs are created or modified — including when the orchestrator creates new feature docs in Phase 6.
+
+### 6.7: Copy `docs/index.html` from template (if it doesn't exist)
+
+### 6.8: Suggest serve command
 - If `package.json` exists: add `"docs:serve": "npx docsify-cli serve docs"`
 - If Nx workspace: suggest Nx target
 
-## Step 6.8: Generate Feature Docs for Existing Features
+## Step 6.9: Generate Feature Docs for Existing Features
 
 For each feature detected in Step 3:
 1. Create a feature doc from `feature-template.md` in `docs/agentforge/features/<domain>/<slug>/README.md`
@@ -172,6 +195,12 @@ For each feature detected in Step 3:
    - **Key Files** (entities, services, components) in Implementation Notes
 4. Leave concept/plan/challenge sections empty (feature predates agentforge)
 5. Update the feature link in `docs/agentforge/FEATURES.md` to point to the doc
+
+> **IMPORTANT — Docsify Link Paths:** Docsify resolves ALL markdown links relative to the `docs/` root, NOT relative to the current file. Links in `docs/agentforge/FEATURES.md` to feature docs MUST use full paths from docs root:
+> - CORRECT: `[Tenant Management](agentforge/features/tenant/tenant-mgmt/README.md)`
+> - WRONG: `[Tenant Management](features/tenant/tenant-mgmt/README.md)`
+>
+> This applies everywhere: FEATURES.md, SITEMAP.md, overview.md, workflows.md, feature docs linking to other feature docs, etc.
 
 ## Step 7: Report
 

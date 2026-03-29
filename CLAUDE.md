@@ -65,6 +65,10 @@ All agentforge-managed docs live under `docs/agentforge/` — the project's `doc
 
 Docsify index.html includes plugins: Mermaid, flexible-alerts, tabs, pagination, sidebar-collapse, copy-code.
 
+**Docsify Link Rule:** ALL markdown links in docs are resolved relative to the `docs/` root, NOT relative to the current file. Files in subdirectories (e.g., `docs/agentforge/FEATURES.md`) must use full paths from docs root (`agentforge/features/...`), not relative paths (`features/...`).
+
+**Sidebar Generation:** `/setup` creates `scripts/generate-sidebar.sh` which scans `docs/` recursively and regenerates `docs/_sidebar.md`. A `PostToolUse` hook on `Write(docs/**)` runs this script automatically after every doc change.
+
 ### Ralph Pattern (State Management)
 
 State lives in the filesystem, not LLM context:
