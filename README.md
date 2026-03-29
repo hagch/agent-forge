@@ -50,7 +50,18 @@ This analyzes your repository, extracts coding conventions, generates agents and
 | Command | Purpose |
 |---------|---------|
 | `/setup` | Initialize framework in a project (or update existing) |
+| `/orchestrate` | Interactive feature pipeline — runs all 6 phases with human checkpoints |
 | `/self-improve` | Manual improvement: Superpowers diff, online research, community scan, health check |
+
+### /orchestrate
+
+The primary way to use agentforge. Say "let's build a feature" or run `/orchestrate` to start the interactive pipeline. Unlike the autonomous orchestrator agent, the skill:
+
+- **Brainstorms with you** — Socratic dialogue in Phase 1, not just a report
+- **Lets you choose** — Autonomous or interactive challenge mode (per-perspective)
+- **Reports progress** — Status updates at milestones during development
+- **Proposes, never auto-applies** — All framework changes (agents, skills, CLAUDE.md) require your explicit approval
+- **Only auto-applies docs** — Feature docs, registries, and Docsify updates are committed directly
 
 ## Agents
 

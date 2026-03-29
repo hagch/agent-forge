@@ -109,17 +109,17 @@ Read all local framework files and check:
 
 ### Recommendations
 
-#### AUTO-APPLY (will be committed directly)
-- <agent/skill changes with rationale>
+#### AUTO-APPLY (committed directly)
+- <documentation changes only>
 
-#### PROPOSE (for your review)
+#### PROPOSE (require your approval)
 - <CLAUDE.md, base-instructions, hook changes with rationale>
 ```
 
 ## Step 6: Apply / Propose
 
-- **AUTO-APPLY:** Agent definitions, skills, task templates → edit and commit
-  - Commit message: `improve: self-improve scan <date>`
-- **PROPOSE:** CLAUDE.md, base instructions, hooks → present to user, wait for approval
+- **AUTO-APPLY:** Only documentation (feature docs, registries) → edit and commit
+  - Commit message: `docs: self-improve scan <date>`
+- **PROPOSE:** Agent definitions, skills, CLAUDE.md, base instructions, hooks → present to user, wait for explicit approval before applying
 - **PLUGIN UPDATES:** Unchanged local files → update from template, commit
   - Commit message: `chore: update from agentforge template v<version>`

@@ -86,7 +86,12 @@ State lives in the filesystem, not LLM context:
 ## Runtime Commands
 
 - **`/setup`** — Analyzes target repo, extracts conventions, copies templates, configures agents
+- **`/orchestrate`** — Interactive feature pipeline: runs all 6 phases in the conversation with human checkpoints. Preferred over the autonomous orchestrator agent.
 - **`/self-improve`** — Compares with Superpowers plugin, researches community patterns, runs health check
+
+## Auto-Apply Policy
+
+Only documentation changes are auto-applied (feature docs, FEATURES.md, SITEMAP.md, DECISIONS.md). All changes to agents, skills, CLAUDE.md, base instructions, and hooks **require explicit user approval** before being applied. This policy is enforced in the orchestrate skill, orchestrator agent (Phase 6), and self-improve skill.
 
 ## Design Influences
 

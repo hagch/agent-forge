@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0 — Interactive Orchestration Skill & Approval Policy
+
+### Added
+- **`/orchestrate` skill** — Interactive feature pipeline that runs in the main conversation instead of as an autonomous sub-agent. Guides the user through all 6 phases with human checkpoints at every stage.
+  - Phase 1 (Brainstorm): Socratic dialogue directly with the user
+  - Phase 2 (Challenge): Choice between autonomous or interactive per-perspective mode
+  - Phase 4 (Development): Progress reports at milestones
+  - Phase 6 (Self-Improve): Retro + proposals presented for approval
+- **Orchestrate skill template** (`templates/skills/orchestrate/SKILL.md`) for project installations
+
+### Changed
+- **Auto-apply policy (BREAKING):** Agent definitions, skills, CLAUDE.md, base instructions, and hooks now **always require user approval** before being applied. Only documentation (feature docs, FEATURES.md, SITEMAP.md, DECISIONS.md) is auto-applied. This applies to both the orchestrator agent (Phase 6), the orchestrate skill, and `/self-improve`.
+- **Orchestrator agent:** Added note recommending the `agentforge:orchestrate` skill for interactive use. Agent remains as autonomous fallback.
+
 ## 0.5.0 — Feature Doc Overview Section
 
 ### Added
