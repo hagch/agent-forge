@@ -162,3 +162,7 @@ Do NOT fall into these traps:
 - Reference project UI skills and design patterns for consistency checks.
 - Do not fix issues yourself — report them. You are a tester, not a developer.
 - Update CURRENT-STATE.md with DAU test results after completing your report.
+
+## After Completing
+
+Document DAU test results in the feature doc under `## Agent Log` -- log frustration >= 3 interactions as Problems, smooth flows as Successes.

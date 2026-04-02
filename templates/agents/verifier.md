@@ -298,3 +298,7 @@ Paste the final summary line from the test runner. If tests fail, paste the fail
 - If all passes are clean, say so explicitly with evidence — do not invent findings to look thorough
 - If you cannot run certain tests (missing infrastructure, external dependencies), document what you could not verify and why. Do not claim PASS for unverified passes.
 - Update CURRENT-STATE.md with the verification results after completing your review
+
+## After Completing
+
+Document verification results in the feature doc under `## Agent Log` -- log BLOCKER/HIGH findings as Problems, clean passes as Successes.

@@ -1,15 +1,76 @@
 ---
 name: self-improve
 description: >
-  Use to manually trigger framework improvement. Compares with Superpowers
-  updates, searches online for new patterns, scans for community skills,
-  and checks framework health. Triggers: /self-improve command, periodic
+  Use to manually trigger framework improvement. Runs feature retro (if
+  invoked after /finish-branch), compares with Superpowers updates, searches
+  online for new patterns, scans for community skills, and checks framework
+  health. Triggers: /self-improve command, after /finish-branch, periodic
   maintenance, after noticing framework issues.
 ---
 
-# /self-improve — Manual Improvement Trigger
+# /self-improve — Feature Retro & Manual Improvement Trigger
 
-Run a comprehensive improvement scan independent of a feature cycle.
+Run a feature retrospective (after `/finish-branch`) and/or a comprehensive improvement scan.
+
+## Step 0: Feature Retro
+
+If invoked after `/finish-branch` (i.e., a feature was just completed), analyze what happened:
+
+### 0.1: Read Agent Logs
+Read ALL `## Agent Log` entries from the completed feature doc at `docs/agentforge/features/<domain>/<slug>/README.md`.
+
+Collect:
+- All **Problem** entries (with agent name, task, root cause, solution)
+- All **Success** entries (with agent name, task, what worked)
+- All **Guardrail** entries (what NOT to do)
+
+### 0.2: Analyze Patterns
+Identify recurring patterns across all agent logs:
+
+- **Rework patterns:** Which agents had the most Problems? Which review stage caught the most issues?
+- **Spec gaps:** Were there MISSING or PARTIALLY_IMPLEMENTED findings from spec-reviewer? → Brainstorming needs improvement
+- **Quality patterns:** Which dimensions scored below 7 in quality-reviewer? → Dev agent instructions need improvement
+- **DAU issues:** What frustration > 3 moments did dau-tester find? → UX-researcher or frontend agent needs improvement
+- **Verification blockers:** What BLOCKER/HIGH issues did verifier find? → Which phase should have caught this earlier?
+- **Agent stuck patterns:** Did any agent hit the 3-attempt escalation limit? → Instructions unclear or missing context
+
+### 0.3: Generate Improvement Proposals
+For each pattern found, generate a specific improvement proposal:
+
+```markdown
+### Retro Finding: <title>
+
+**Pattern:** <what happened repeatedly>
+**Affected agents:** <list>
+**Root cause:** <why this happened — missing instruction? unclear spec? wrong skill?>
+**Proposed fix:** <specific change to agent/skill/base-instructions>
+**Apply to:** <exact file path>
+```
+
+### 0.4: Present Retro Summary
+Present to user:
+
+```markdown
+## Feature Retro — <feature name>
+
+### What Went Well
+- <successes from agent logs>
+
+### What Caused Rework
+- <problems, grouped by pattern>
+
+### Improvement Proposals
+<list of proposals from 0.3>
+
+### Metrics
+- Total Problems logged: X
+- Total Successes logged: X
+- Agents with most issues: <list>
+- Review stage that caught most: <spec-compliance | quality | mini-verify | full-verify>
+- Average DAU frustration: X.X
+```
+
+If no active feature was just completed (manual `/self-improve` run), skip Step 0 and start at Step 1.
 
 ## Step 1: Plugin Template Diff
 

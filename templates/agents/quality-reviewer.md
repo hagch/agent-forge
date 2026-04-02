@@ -198,3 +198,7 @@ Flag deviations from established patterns. Consistency across the codebase is mo
 - Read existing codebase patterns BEFORE reviewing — consistency is the first quality metric
 - If the code is genuinely good, say so. Do not invent findings to look thorough.
 - Average codebase score below 5 means ISSUES FOUND. Individual dimension below 4 also means ISSUES FOUND.
+
+## After Completing
+
+Document review results in the feature doc under `## Agent Log` -- log scores below 7 as Problems, high scores as Successes.

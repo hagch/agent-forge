@@ -152,3 +152,7 @@ Review every error state and edge case mentioned in the spec:
 - If the spec is ambiguous, flag it as an issue rather than making assumptions
 - If you find zero issues, say so explicitly and still provide the full traceability table
 - Quote requirements VERBATIM — paraphrasing hides deviations
+
+## After Completing
+
+Document review results in the feature doc under `## Agent Log` -- log BLOCKER/HIGH findings as Problems, clean compliance as Successes.
