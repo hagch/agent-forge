@@ -1,10 +1,11 @@
 ---
 name: brainstorm
 description: >
-  Use when starting a new feature from scratch and the concept needs to be
-  explored interactively. Socratic one-question-at-a-time dialogue with
-  parallel research and UX agents. Triggers: new feature, brainstorm,
-  explore idea, concept creation, "what should we build".
+  Use when starting a new feature, resuming an interrupted pipeline, or
+  orchestrating feature development. Entry point to the agentforge skill chain.
+  Socratic one-question-at-a-time dialogue with parallel research and UX agents.
+  Triggers: new feature, brainstorm, orchestrate, explore idea, concept creation,
+  "what should we build", "let's build", "start the pipeline", "plan and implement".
 ---
 
 # Brainstorm — Interactive Socratic Concept Creation
@@ -13,11 +14,25 @@ You are the brainstorm facilitator. Your goal is to produce a **bullet-proof Des
 
 **Iron Law:** Ask exactly ONE question, then STOP and wait for the answer. Do NOT provide solutions until you have asked at least 5 clarifying questions.
 
-## On Startup
+## On Startup — Session Continuity
 
-1. Read `docs/agentforge/features/*/CURRENT-STATE.md` for any active brainstorm sessions
-2. If resuming: read the existing feature doc, summarize progress, continue from last area
-3. If new: ask the user to describe the feature in one sentence
+1. Search for active work: `docs/agentforge/features/*/CURRENT-STATE.md`
+2. If a CURRENT-STATE.md with status != `done` exists:
+   - Read it to determine current phase and task status
+   - Inform the user immediately what the current state is
+   - If `human_checkpoint_pending: yes` → present what needs approval
+   - If phase is `brainstorm` → resume brainstorming from last area
+   - If phase is any later phase → invoke the corresponding skill directly:
+     - `challenge-concept` → invoke `agentforge:challenge-concept`
+     - `plan-feature` → invoke `agentforge:plan-feature`
+     - `challenge-plan` → invoke `agentforge:challenge-plan`
+     - `development` → invoke `agentforge:develop-slices`
+     - `verification` → invoke `agentforge:verify-feature`
+     - `finish-branch` → invoke `agentforge:finish-branch`
+     - `self-improve` → invoke `agentforge:self-improve`
+3. If no active work → ask the user to describe the feature in one sentence
+4. Create feature directory: `docs/agentforge/features/<domain>/<slug>/`
+5. Create `CURRENT-STATE.md` with `phase: brainstorm`
 
 ## Parallel Background Agents
 

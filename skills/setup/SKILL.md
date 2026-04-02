@@ -217,7 +217,7 @@ Present summary:
 
 ### Installed
 - 15 agent definitions in .claude/agents/
-- 15 skills in .claude/skills/
+- 13 skills in .claude/skills/
 - Documentation templates in docs/agentforge/
 
 ### Detected

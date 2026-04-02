@@ -49,7 +49,7 @@ Each phase is a **self-contained skill** that explicitly invokes the next. The O
 
 - **`skills/`** — Runtime command skills (`/setup`, `/self-improve`) with SKILL.md definitions
 - **`templates/agents/`** — 15 agent prompt templates + `base-instructions.md` shared by all agents
-- **`templates/skills/`** — 15 skill templates copied to target projects during `/setup`
+- **`templates/skills/`** — 13 skill templates copied to target projects during `/setup`
 - **`templates/docs/`** — Docsify root templates (index.html with plugins, README.md landing page)
 - **`templates/docs/agentforge/`** — Top-down doc templates (README, overview, workflows) + registry files (FEATURES, DECISIONS, SITEMAP, feature-template)
 - **`.claude-plugin/`** — Plugin metadata (`plugin.json`, `marketplace.json`)
@@ -87,7 +87,7 @@ State lives in the filesystem, not LLM context:
 ## Runtime Commands
 
 - **`/setup`** — Analyzes target repo, extracts conventions, copies templates, configures agents
-- **`/orchestrate`** — Interactive feature pipeline: invokes the 8-phase skill chain with human checkpoints. Each phase is a dedicated skill that invokes the next.
+- **`/brainstorm`** — Entry point to the skill chain. Handles session resumption (resumes at correct phase if interrupted) and new feature brainstorming. Each skill invokes the next automatically.
 - **`/self-improve`** — Compares with Superpowers plugin, researches community patterns, runs health check
 
 ## Auto-Apply Policy
