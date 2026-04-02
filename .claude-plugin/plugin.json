@@ -1,7 +1,7 @@
 {
   "name": "agentforge",
-  "description": "Self-improving multi-agent development framework for Claude Code. 7 agents, 6 phases, compound verification, session continuity, and continuous self-improvement.",
-  "version": "0.5.1",
+  "description": "Self-improving multi-agent development framework for Claude Code. 15 agents, 8-phase skill chain, ShapeUp vertical slices, per-slice verification, conventional commits, and continuous self-improvement.",
+  "version": "1.0.0",
   "author": {
     "name": "Christoph Hagelkruys"
   },

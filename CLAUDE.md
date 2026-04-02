@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-agentforge is a Claude Code plugin that orchestrates 7 specialized agents through a 6-phase feature development pipeline. It's a self-improving multi-agent framework that brings compound AI system patterns to software development.
+agentforge is a Claude Code plugin that orchestrates 15 specialized agents through an 8-phase skill-chained feature development pipeline. It's a self-improving multi-agent framework that brings compound AI system patterns to software development.
 
 **Not a compiled application** — this is a plugin distribution. There are no build, test, or lint commands for the framework itself.
 
@@ -26,29 +26,30 @@ Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in `~/.claude/settings.json` e
 
 ## Architecture
 
-### 6-Phase Pipeline
+### 8-Phase Skill Chain
 
 ```
-BRAINSTORM → CHALLENGE → PLANNING → PLAN-CHALLENGE → DEVELOPMENT → VERIFICATION → SELF-IMPROVE
+/brainstorm → /challenge-concept → /plan-feature → /challenge-plan → /develop-slices → /verify-feature → /finish-branch → /self-improve
 ```
 
-The **Orchestrator** (opus) drives the pipeline, dispatching specialized agents per phase:
+Each phase is a **self-contained skill** that explicitly invokes the next. The Orchestrator manages state and human checkpoints.
 
-| Phase | Agent | Model | Purpose |
-|-------|-------|-------|---------|
-| 1. Brainstorm | Researcher | sonnet | Online research + Socratic dialogue → Concept Doc |
-| 2. Challenge | Challenger | sonnet | 4-lens stress test (Security, Performance, DX, DAU) |
-| 3. Planning | Planner | opus | Task-DAG with dependencies & acceptance criteria |
-| 3.5 Plan-Challenge | Challenger | sonnet | Review plan for blockers |
-| 4. Development | Dev-Backend + Dev-Frontend | sonnet | Parallel TDD implementation via Agent Teams |
-| 5. Verification | Verifier | opus | 6-pass code review gate |
-| 6. Self-Improve | Orchestrator | opus | Retro + docs + agent/skill improvements |
+| Phase | Skill | Agents Involved | Purpose |
+|-------|-------|----------------|---------|
+| 1. Brainstorm | `/brainstorm` | Researcher + UX-Researcher (parallel) | Socratic dialogue, one question at a time → bullet-proof Design-Spec |
+| 2. Challenge Concept | `/challenge-concept` | 4× Challenger (parallel) | Security, Performance, DX, DAU stress test on spec |
+| 3. Plan Feature | `/plan-feature` | Planner (opus) | ShapeUp vertical slices + micro-tasks + pseudocode → Task-DAG |
+| 3.5 Challenge Plan | `/challenge-plan` | 4× Challenger (parallel) | Architecture, Completeness, Maintainability, Risk against codebase |
+| 4. Development | `/develop-slices` | DB + Backend + Frontend + Test + DevOps per slice | TDD + conventional commits + 3-stage review per slice |
+| 5. Verification | `/verify-feature` | 6× Verifier + DAU-Tester (parallel) | Cross-slice integration, security, performance, DAU journey, compound gate |
+| 6. Finish Branch | `/finish-branch` | — | PR/Merge/Keep/Discard |
+| 7. Self-Improve | `/self-improve` | Researcher | Retro + online research + health check |
 
 ### Key Directories
 
 - **`skills/`** — Runtime command skills (`/setup`, `/self-improve`) with SKILL.md definitions
-- **`templates/agents/`** — 7 agent prompt templates + `base-instructions.md` shared by all agents
-- **`templates/skills/`** — 10 skill templates copied to target projects during `/setup`
+- **`templates/agents/`** — 15 agent prompt templates + `base-instructions.md` shared by all agents
+- **`templates/skills/`** — 15 skill templates copied to target projects during `/setup`
 - **`templates/docs/`** — Docsify root templates (index.html with plugins, README.md landing page)
 - **`templates/docs/agentforge/`** — Top-down doc templates (README, overview, workflows) + registry files (FEATURES, DECISIONS, SITEMAP, feature-template)
 - **`.claude-plugin/`** — Plugin metadata (`plugin.json`, `marketplace.json`)
@@ -86,7 +87,7 @@ State lives in the filesystem, not LLM context:
 ## Runtime Commands
 
 - **`/setup`** — Analyzes target repo, extracts conventions, copies templates, configures agents
-- **`/orchestrate`** — Interactive feature pipeline: runs all 6 phases in the conversation with human checkpoints. Preferred over the autonomous orchestrator agent.
+- **`/orchestrate`** — Interactive feature pipeline: invokes the 8-phase skill chain with human checkpoints. Each phase is a dedicated skill that invokes the next.
 - **`/self-improve`** — Compares with Superpowers plugin, researches community patterns, runs health check
 
 ## Auto-Apply Policy
