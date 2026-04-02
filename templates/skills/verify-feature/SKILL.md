@@ -183,7 +183,7 @@ Per-finding format:
 
 **Question:** Can a non-technical, impatient user complete the entire feature flow?
 
-Load the `dau-ui-test` skill for the persona and test script pattern.
+Dispatch the `dau-tester` agent in **Full Journey mode** for the persona and test script pattern.
 
 This is NOT per-slice UI testing. This is the COMPLETE user journey through ALL slices combined.
 

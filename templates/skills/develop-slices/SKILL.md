@@ -229,7 +229,7 @@ If FAIL: route to the implementer agent (same instance). Max 2 rounds, then esca
 - Performance: no N+1 queries, unbounded operations, missing indexes
 
 **Pass 2 — DAU:**
-Load the `dau-ui-test` skill if UI changes are in this slice.
+Dispatch the `dau-tester` agent in **Slice DAU mode** if UI changes are in this slice.
 - Non-technical impatient user persona
 - Can the user find, use, and understand the new functionality?
 - Mobile viewport (375px minimum)
