@@ -355,4 +355,4 @@ After the verification report is compiled:
 
 When the verification report is PASS (or PASS WITH NOTES after user approval):
 
-> **Invoke `agentforge:finish-branch` skill** to integrate the verified feature.
+> **Invoke `agentforge:generate-docs` skill** to generate user-facing documentation before pushing.

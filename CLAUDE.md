@@ -26,10 +26,10 @@ Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in `~/.claude/settings.json` e
 
 ## Architecture
 
-### 8-Phase Skill Chain
+### 9-Phase Skill Chain
 
 ```
-/brainstorm → /challenge-concept → /plan-feature → /challenge-plan → /develop-slices → /verify-feature → /finish-branch → /self-improve
+/brainstorm → /challenge-concept → /plan-feature → /challenge-plan → /develop-slices → /verify-feature → /generate-docs → /finish-branch → /self-improve
 ```
 
 Each phase is a **self-contained skill** that explicitly invokes the next. The Orchestrator manages state and human checkpoints.
@@ -42,14 +42,15 @@ Each phase is a **self-contained skill** that explicitly invokes the next. The O
 | 3.5 Challenge Plan | `/challenge-plan` | 4× Challenger (parallel) | Architecture, Completeness, Maintainability, Risk against codebase |
 | 4. Development | `/develop-slices` | DB + Backend + Frontend + Test + DevOps per slice | TDD + conventional commits + 3-stage review per slice |
 | 5. Verification | `/verify-feature` | 6× Verifier + DAU-Tester (parallel) | Cross-slice integration, security, performance, DAU journey, compound gate |
-| 6. Finish Branch | `/finish-branch` | — | PR/Merge/Keep/Discard |
-| 7. Self-Improve | `/self-improve` | Researcher | Retro + online research + health check |
+| 6. Generate Docs | `/generate-docs` | — | User-facing docs: tutorials, how-to guides, API reference, FAQ (Diataxis) |
+| 7. Finish Branch | `/finish-branch` | — | Push branch with all changes (code + tests + docs) |
+| 8. Self-Improve | `/self-improve` | Researcher | Feature retro + online research + health check |
 
 ### Key Directories
 
 - **`skills/`** — Runtime command skills (`/setup`, `/self-improve`) with SKILL.md definitions
 - **`templates/agents/`** — 15 agent prompt templates + `base-instructions.md` shared by all agents
-- **`templates/skills/`** — 13 skill templates copied to target projects during `/setup`
+- **`templates/skills/`** — 14 skill templates copied to target projects during `/setup`
 - **`templates/docs/`** — Docsify root templates (index.html with plugins, README.md landing page)
 - **`templates/docs/agentforge/`** — Top-down doc templates (README, overview, workflows) + registry files (FEATURES, DECISIONS, SITEMAP, feature-template)
 - **`.claude-plugin/`** — Plugin metadata (`plugin.json`, `marketplace.json`)

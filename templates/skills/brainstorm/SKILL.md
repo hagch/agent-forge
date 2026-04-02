@@ -28,6 +28,7 @@ You are the brainstorm facilitator. Your goal is to produce a **bullet-proof Des
      - `challenge-plan` → invoke `agentforge:challenge-plan`
      - `development` → invoke `agentforge:develop-slices`
      - `verification` → invoke `agentforge:verify-feature`
+     - `generate-docs` → invoke `agentforge:generate-docs`
      - `finish-branch` → invoke `agentforge:finish-branch`
      - `self-improve` → invoke `agentforge:self-improve`
 3. If no active work → ask the user to describe the feature in one sentence
